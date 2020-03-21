@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axiosWithAuth from "../utils/axiosWithAuth";
 
+
 const initialColor = {
   color: "",
   code: { hex: "" }
 };
 
-const ColorList = ({ colors, updateColors }) => {
+
+const ColorList = ({ colors, updateColors, setColorChanged }) => {
   console.log("Colors in ColorList.js", colors);
+
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
@@ -20,39 +23,37 @@ const ColorList = ({ colors, updateColors }) => {
   //   const colorById = colors.find(color => {
   //     return `${color.id}` === match.params.id;
   //   });
-
   //   console.log("colorToEdit", colorToEdit);
-
   //   if (colorById) {
   //     setColorToEdit(colorById);
   //   }
   // }, [colors, match.params.id]);
 
 
-
+  console.log("ColorToEdit, id", colorToEdit.id)
 
   const saveEdit = e => {
     e.preventDefault();
-    
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
-
-    
     axiosWithAuth()
-      .post(`/api/colors`, colorToEdit)
+      .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
       .then(res => {
-        console.log("Post res in saveEdit", res);
-        updateColors(colorToEdit)
+        setColorChanged(true)
+        console.log("put res in saveEdit", res);
       })
       .catch(err => {
-        console.log("Error with POST", err);
+        console.log("Error with put", err);
       })
+      setColorChanged(false);
   };
+
 
   const deleteColor = color => {
     // make a delete request to delete this color
   };
+
 
   return (
     <div className="colors-wrap">
