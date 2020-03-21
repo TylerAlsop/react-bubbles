@@ -52,6 +52,16 @@ const ColorList = ({ colors, updateColors, setColorChanged }) => {
 
   const deleteColor = color => {
     // make a delete request to delete this color
+    axiosWithAuth()
+      .delete(`/api/colors/${color.id}`, color)
+      .then(res => {
+        setColorChanged(true)
+        console.log("put res in saveEdit", res);
+      })
+      .catch(err => {
+        console.log("Error with put", err);
+      })
+      setColorChanged(false);
   };
 
 
