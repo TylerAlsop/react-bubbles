@@ -18,7 +18,7 @@ function App() {
       */}
       <Switch>
         <PrivateRoute exact path="/api/bubble-page" component={BubblePage} />
-        {/* <Route path="/api/login" component={Login} /> */}
+        <Route path="/api/colors" component={BubblePage} />
       </Switch>
     </div>
   );
